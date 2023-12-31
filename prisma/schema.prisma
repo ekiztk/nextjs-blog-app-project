@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  password String
+  name     String?
+  aboutMe String?
+  birthDate DateTime?
+  registerDate DateTime @default(now())
+  image         String?
+  posts       Post[]   @relation("postAuthor")
+  comments    Comment[] @relation("commentAuthor")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  slug String @unique 
+  title       String
+  content String
+  image       String
+  createDate DateTime @default(now())
+  lastModifyDate DateTime @updatedAt
+  author        User     @relation("postAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  authorId      Int
+  category Category @relation("postCategory",fields: [categoryId], references: [id])
+  categoryId      Int
+  comments Comment[] @relation("commentPost")
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  value      String @unique
+  label String
+  posts       Post[]   @relation("postCategory")
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  content      String
+  createDate DateTime @default(now())
+  author User @relation("commentAuthor",fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
+  post Post @relation("commentPost",fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+}
