@@ -36,7 +36,7 @@ model Post {
   id          Int      @id @default(autoincrement())
   slug String @unique 
   title       String
-  content String
+  content String @db.Text
   image       String
   createDate DateTime @default(now())
   lastModifyDate DateTime @updatedAt

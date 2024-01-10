@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
     const newlyCreatedPost = await prisma.post.create({
       data: {
         ...extractPostData,
+        content: JSON.stringify(extractPostData.content),
         slug: slugify(extractPostData.title),
         author: {
           connect: {

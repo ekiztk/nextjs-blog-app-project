@@ -105,8 +105,8 @@ export default function BlogDetailsHome({ blogData }: { blogData: PostData }) {
                       />
                     </div>
                   </div>
-                  <p className="mb-8 leading-relaxed text-base font-medium sm:text-lg lg:text-base xl:text-lg">
-                    {blogData?.content}
+                  <p className="mb-8 whitespace-pre-wrap break-keep leading-relaxed text-base font-medium sm:text-lg lg:text-base xl:text-lg">
+                    {JSON.parse(blogData?.content)}
                   </p>
                 </div>
               </div>
