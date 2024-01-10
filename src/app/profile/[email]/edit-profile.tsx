@@ -138,6 +138,17 @@ export default function EditProfile({
               <div>
                 <form onSubmit={handleUserSubmit}>
                   <div className="flex gap-3">
+                    {imageLoading ? (
+                      <div className="w-1/2">
+                        <Spinner />
+                      </div>
+                    ) : (
+                      <img
+                        src={user?.image || "/user.png"}
+                        alt={user?.name}
+                        className="w-24 h-24 rounded-full mx-auto mb-4"
+                      />
+                    )}
                     <div className={`${imageLoading ? "w-1/2" : "w-full"}`}>
                       <label className="mb-3 block text-sm font-medium text-dark dark:text-white">
                         Upload User Image
@@ -151,11 +162,6 @@ export default function EditProfile({
                         className="w-full mb-8 rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                       />
                     </div>
-                    {imageLoading ? (
-                      <div className="w-1/2">
-                        <Spinner />
-                      </div>
-                    ) : null}
                   </div>
                   <label>
                     Email:

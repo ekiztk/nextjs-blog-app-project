@@ -4,16 +4,27 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   try {
     const queryParameters = Object.fromEntries(request.nextUrl.searchParams);
+    const sortField = queryParameters.sortField;
+    const sortOrder = queryParameters.sortOrder;
 
     if (!validateQueryParameters(queryParameters)) {
       return NextResponse.json({
         success: false,
-        message: "Invalid query parameters",
+        message: "Invalid query parameters!",
       });
     }
 
+    const queryObj = Object.fromEntries(
+      Object.entries(queryParameters).filter(
+        ([key]) => !["sortField", "sortOrder"].includes(key)
+      )
+    );
+
     const getAllBlogPosts = await prisma.post.findMany({
-      where: queryParameters,
+      where: queryObj,
+      orderBy: {
+        [sortField]: sortOrder,
+      },
       include: {
         author: { select: { name: true, email: true, image: true } },
         category: { select: { value: true, label: true } },
@@ -35,7 +46,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Something went wrong! Please try again",
     });
   }
 }
@@ -51,6 +62,8 @@ function validateQueryParameters(queryParameters: { [key: string]: string }) {
     "lastModifyDate",
     "authorId",
     "categoryId",
+    "sortField",
+    "sortOrder",
   ];
 
   for (const key in queryParameters) {
@@ -66,6 +79,18 @@ function validateQueryParameters(queryParameters: { [key: string]: string }) {
       if (isNaN(Date.parse(queryParameters[key]))) {
         return false;
       }
+    } else if (key === "sortField") {
+      if (
+        !["title", "updateDate", "lastModifyDate"].includes(
+          queryParameters[key]
+        )
+      ) {
+        return false;
+      }
+    } else if (key === "sortOrder") {
+      if (!["asc", "desc"].includes(queryParameters[key])) {
+        return false;
+      }
     } else {
       if (typeof queryParameters[key] !== "string") {
         return false;
@@ -74,35 +99,3 @@ function validateQueryParameters(queryParameters: { [key: string]: string }) {
   }
   return true;
 }
-
-// import prisma from "@/database";
-// import { NextRequest, NextResponse } from "next/server";
-
-// export async function GET(request: NextRequest) {
-//   try {
-//     const getAllBlogPosts = await prisma.post.findMany({
-//       include: {
-//         author: { select: { name: true, email: true, image: true } },
-//         category: { select: { value: true, label: true } },
-//       },
-//     });
-//     if (getAllBlogPosts && getAllBlogPosts.length) {
-//       return NextResponse.json({
-//         success: true,
-//         data: getAllBlogPosts,
-//       });
-//     } else {
-//       return NextResponse.json({
-//         success: false,
-//         message: "Failed to fetch blog posts. Please try again",
-//       });
-//     }
-//   } catch (e) {
-//     console.log(e);
-
-//     return NextResponse.json({
-//       success: false,
-//       message: "Something went wrong ! Please try again",
-//     });
-//   }
-// }

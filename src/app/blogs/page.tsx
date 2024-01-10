@@ -1,10 +1,17 @@
 import BlogList from "@/components/blogs/blog-list";
 
-async function extractAllBlogs() {
-  const res = await fetch(`${process.env.URL}/api/blog-post/get-all-posts`, {
-    method: "GET",
-    cache: "no-store",
-  });
+async function extractAllBlogs(
+  sortField: string = "lastModifyDate",
+  sortOrder: string = "asc"
+) {
+  "use server";
+  const res = await fetch(
+    `${process.env.URL}/api/blog-post/get-all-posts?sortField=${sortField}&sortOrder=${sortOrder}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    }
+  );
 
   const data = await res.json();
 
@@ -14,5 +21,5 @@ async function extractAllBlogs() {
 export default async function Blogs() {
   const blogPostsList = await extractAllBlogs();
 
-  return <BlogList lists={blogPostsList} />;
+  return <BlogList reFetch={extractAllBlogs} lists={blogPostsList} />;
 }

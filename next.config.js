@@ -14,6 +14,7 @@ const nextConfig = {
   },
   experimental: {
     serverComponentsExternalPackages: ["@prisma/client", "bcrypt"],
+    serverActions: true,
   },
 };
 
