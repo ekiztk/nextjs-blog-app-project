@@ -88,7 +88,7 @@ export default function BlogDetailsHome({ blogData }: { blogData: PostData }) {
                   <div className="mb-5">
                     <Link
                       className="inline-flex items-center justify-center rounded-full bg-primary py-2 px-4 text-sm font-semibold text-white"
-                      href={`/category/${blogData?.category?.value}`}
+                      href=""
                     >
                       {blogData?.category?.label}
                     </Link>
@@ -144,7 +144,7 @@ export default function BlogDetailsHome({ blogData }: { blogData: PostData }) {
                           <div className="flex items-center">
                             <Image
                               src={comment?.author?.image || "/user.png"}
-                              className="mr-2"
+                              className="mr-2 rounded-full"
                               alt="User"
                               width={24}
                               height={24}

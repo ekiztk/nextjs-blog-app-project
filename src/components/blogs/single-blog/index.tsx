@@ -17,7 +17,7 @@ export default function SingleBlog({
   return (
     <div className="bg-primary/[10%]">
       <div className="relative overflow-hidden rounded-md  shadow-one dark:bg-dark">
-        <div className="relative block h-[250px] w-full">
+        <div className="relative block h-[196px] w-full">
           <span className="absolute top-6 right-6 z-20 inline-flex items-center justify-center rounded-full bg-green py-2 px-4 text-sm font-semibold capitalize text-white">
             {category?.label}
           </span>

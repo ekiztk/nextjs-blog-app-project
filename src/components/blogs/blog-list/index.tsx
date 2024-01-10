@@ -56,9 +56,9 @@ export default function BlogList({
 
   return (
     <section className="pt-[120px] pb-[120px]">
-      <div className="container ">
+      <div className="container">
         <div className="grid grid-cols-2 grid-rows-1 gap-4">
-          <div className="mb-10 rounded-md bg-primary bg-opacity-5 dark:bg-opacity-10">
+          <div className="rounded-md bg-primary bg-opacity-5 bg-primary/[10%] dark:bg-opacity-10">
             <h3 className="border-b border-body-color border-opacity-10 py-4 px-8 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
               Filter by Category
             </h3>
@@ -85,11 +85,11 @@ export default function BlogList({
               )}
             </div>
           </div>
-          <div className="mb-10 rounded-md bg-primary bg-opacity-5 dark:bg-opacity-10">
+          <div className="rounded-md bg-primary bg-opacity-5 bg-primary/[10%] dark:bg-opacity-10">
             <h3 className="border-b border-body-color border-opacity-10 py-4 px-8 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
               Sort
             </h3>
-            <div className="flex flex-wrap py-6 px-8 gap-2">
+            <div className="flex flex-wrap py-2 px-8 gap-2">
               <label>
                 Sort Field:
                 <select
@@ -116,6 +116,7 @@ export default function BlogList({
           </div>
         </div>
 
+        <h2 className="my-4 text-center text-2xl font-bold">Post List</h2>
         <div className="-mx-4 grid grid-cols-1 md:grid-cols-3  gap-2 ">
           {posts && posts.length
             ? posts.map((listItem: PostData) => {
