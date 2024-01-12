@@ -32,16 +32,18 @@ const Profile = ({ user }: { user: UserProps }) => {
               <h1 className="text-3xl font-semibold text-center">
                 {user?.name}
               </h1>
+              <h6>{user.membershipDuration?.toString()} year with us.</h6>
               <div>
                 <h5 className="text-lg font-semibold text-center">Email</h5>
                 <p className="text-gray-700 text-center">{user?.email}</p>
               </div>
               <div>
                 <h5 className="text-lg font-semibold text-center">
-                  Birth Date
+                  Birth Date - Age
                 </h5>
                 <p className="text-gray-700 text-center">
-                  {new Date(user?.birthDate).toDateString()}
+                  {new Date(user?.birthDate).toDateString()} -{" "}
+                  {user?.age?.toString()} Years old
                 </p>
               </div>
               <div>

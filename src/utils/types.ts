@@ -50,5 +50,8 @@ export interface UserProps {
   name: string;
   aboutMe: string;
   birthDate: string;
+  registerDate?: string;
   image: string;
+  age?: Number;
+  membershipDuration?: Number;
 }

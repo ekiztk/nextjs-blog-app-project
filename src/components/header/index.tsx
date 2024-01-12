@@ -134,7 +134,7 @@ export default function Header() {
                       onClick={() =>
                         router.push(`/profile/${session.user?.email}`)
                       }
-                      text="My Profile"
+                      text={`${session.user?.name}`}
                     />
                   </Link>
                 )}

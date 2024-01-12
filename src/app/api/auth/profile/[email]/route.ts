@@ -15,6 +15,7 @@ export async function GET(
       name: true,
       aboutMe: true,
       birthDate: true,
+      registerDate: true,
       image: true,
     },
   });
@@ -26,9 +27,33 @@ export async function GET(
     });
   }
 
+  const birthDate = new Date(user.birthDate!);
+
+  const registerDate = new Date(user.registerDate!);
+
+  const now = new Date();
+
+  let age = now.getFullYear() - birthDate.getFullYear();
+  const m = now.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  let membershipDuration = now.getFullYear() - registerDate.getFullYear();
+  const n = now.getMonth() - registerDate.getMonth();
+  if (n < 0 || (n === 0 && now.getDate() < registerDate.getDate())) {
+    membershipDuration--;
+  }
+
+  const userWithInfo = {
+    ...user,
+    age: age,
+    membershipDuration: membershipDuration,
+  };
+
   return NextResponse.json({
     success: true,
-    data: user,
+    data: userWithInfo,
   });
 }
 
