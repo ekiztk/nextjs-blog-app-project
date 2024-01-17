@@ -63,6 +63,8 @@ export async function PATCH(
 ) {
   const email = params.email;
   let json = await request.json();
+  delete json.age;
+  delete json.membershipDuration;
 
   const hashedPassword = await hash(json.password, 10);
 
